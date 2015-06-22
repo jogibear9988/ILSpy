@@ -23,17 +23,19 @@ namespace DotNetDecompiler
         {
             additionalPaths.Add("D:\\git\\mcc4\\usedExternalProjects\\wpf\\wpfextendedtoolkit");
             
-            var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-            var pfKey = key.OpenSubKey("SOFTWARE\\Perforce\\Environment").GetValue("P4INSTROOT") as string;
+            //var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+            //var pfKey = key.OpenSubKey("SOFTWARE\\Perforce\\Environment").GetValue("P4INSTROOT") as string;
 
-            var perforge = Path.Combine(pfKey, "p4merge.exe");
+            //var perforge = Path.Combine(pfKey, "p4merge.exe");
 
             List<string> files = new List<string>();
+
+            var perforge = args[4];
 
             //Console.ReadLine();
 
             Console.WriteLine("Compare Disassembler");
-            Console.WriteLine("Perforce Path:" + perforge);
+            Console.WriteLine("Diff-Tool Path:" + perforge);
 
             for (int index = 0; index < 2; index++)
             {
@@ -67,7 +69,7 @@ namespace DotNetDecompiler
                 }
             }
 
-            Process.Start(perforge, string.Join(" ", files.Select(x => "\"" + x + "\"")));
+            Process.Start(perforge.Replace("\"", ""), string.Join(" ", files.Select(x => "\"" + x + "\"")));
         }
 
         static AssemblyDefinition resolver_ResolveFailure(object sender, AssemblyNameReference reference)
